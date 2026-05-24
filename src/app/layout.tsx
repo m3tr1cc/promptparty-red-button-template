@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Press the Button",
-  description: "A tiny 2.5D red button interaction template.",
+  title: "",
+  description: "",
 };
 
 export default function RootLayout({

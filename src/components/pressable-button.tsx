@@ -1,19 +1,14 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { useState } from "react";
 
 type PressableButtonProps = {
   ariaLabel: string;
-  pressCount: number;
-  onPress: () => void;
+  onPress?: () => void;
 };
 
-export function PressableButton({
-  ariaLabel,
-  pressCount,
-  onPress,
-}: PressableButtonProps) {
+export function PressableButton({ ariaLabel, onPress }: PressableButtonProps) {
   const [isPressed, setIsPressed] = useState(false);
 
   const release = () => setIsPressed(false);
@@ -27,7 +22,7 @@ export function PressableButton({
           return;
         }
 
-        onPress();
+        onPress?.();
       }}
       onPointerDown={() => setIsPressed(true)}
       onPointerUp={release}
@@ -44,7 +39,7 @@ export function PressableButton({
         if (event.key === " " || event.key === "Enter") {
           event.preventDefault();
           release();
-          onPress();
+          onPress?.();
         }
       }}
       className="group relative h-64 w-56 rounded-full outline-none sm:h-72 sm:w-64"
@@ -117,20 +112,6 @@ export function PressableButton({
         }}
         transition={{ duration: 0.16 }}
       />
-
-      <AnimatePresence>
-        {pressCount > 0 ? (
-          <motion.span
-            key={pressCount}
-            aria-hidden="true"
-            className="absolute left-0 top-0 size-56 rounded-full border border-red-300/60 sm:size-64"
-            initial={{ opacity: 0.55, scale: 0.92 }}
-            animate={{ opacity: 0, scale: 1.34 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.58, ease: "easeOut" }}
-          />
-        ) : null}
-      </AnimatePresence>
 
       <span className="absolute left-0 top-0 size-56 rounded-full ring-1 ring-white/10 transition group-focus-visible:ring-4 group-focus-visible:ring-red-200/70 sm:size-64" />
     </motion.button>
